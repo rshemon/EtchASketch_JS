@@ -1,0 +1,1 @@
+Learning Javsscript DOM manipulation! Simple Etch-A-Sketch program which allows you to resize the sketch grid.

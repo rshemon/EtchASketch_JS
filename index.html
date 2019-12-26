@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Etch-A-Sketch</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>Etch-A-Sketch</h1>
+<div class="topHeaderStuff">
+  <button id="clear" onclick="clearColour()">Clear</button>
+  <button id="update" onclick="updateGrid()">Update Grid Size</button>
+  <p>Enter Integer Grid Size (up to 100): </p>
+  <input type = "text" name="newGridSize" value="64">
+</div>
+<br><br>
+
+<div class="squareContainer">
+
+</div>
+
+
+  <script>
+    //called when mouse hovers over squares
+    //Changes squares class which corresponds to css style (black fill)
+    function changeColour(e) {
+      e.target.classList.remove('blankColour')
+      e.target.classList.add('colourMe');
+    }
+
+    function updateGrid() {
+      newGridSize = parseInt(document.getElementsByName('newGridSize')[0].value)
+      if (Number.isInteger(newGridSize) && newGridSize!== gridSize && newGridSize <= 100) {
+        deleteGrid();
+        gridSize = newGridSize;
+        squareWidth = Number.parseFloat((containerSize*1.0)/(gridSize*1.0)).toPrecision(100);
+        setGrid();
+        console.log(squareWidth);
+      }
+    }
+
+    //change all square classes back to no fill
+    //if grid value is an integer and it is different from previous
+    //value, then setup new grid
+    function clearColour() {
+      for (var square of squares) {
+        square.classList.remove('colourMe');
+        square.classList.add('blankColour');
+      }
+    }
+
+    //Called when user enters new grid Size
+    //Removed previous grid
+    function deleteGrid() {
+      for (var square of squares) {
+        square.parentNode.removeChild(square);
+      }
+    }
+
+    //sets up the new grid
+    function setGrid() {
+      var i;
+      for (i=0; i < gridSize*gridSize; i++) {
+        var newDiv = document.createElement('div');
+        container.appendChild(newDiv);
+        newDiv.classList.add('squareDiv')
+        newDiv.classList.add('blankColour')
+      }
+
+      squares = document.querySelectorAll('.squareDiv');
+
+      for (var square of squares) {
+        square.addEventListener('mouseover',changeColour);
+        square.style.setProperty('--squareWidth', squareWidth + 'px');
+      }
+    }
+
+    const container = document.querySelector('div.squareContainer');
+    const containerSize = 640;
+
+    var gridSize = parseInt(document.getElementsByName('newGridSize')[0].value);
+    var squareWidth = (containerSize)/gridSize;
+    var squares;
+
+    setGrid();
+
+  </script>
+</body>
+</html>
