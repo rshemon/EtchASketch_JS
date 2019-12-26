@@ -22,6 +22,7 @@
 
 
   <script>
+
     //called when mouse hovers over squares
     //Changes squares class which corresponds to css style (black fill)
     function changeColour(e) {
@@ -29,6 +30,10 @@
       e.target.classList.add('colourMe');
     }
 
+    //Called when user presses update button with new grid size
+    //works for number 1 to 100
+    //if grid value is an integer and it is different from previous
+    //value, then setup new grid
     function updateGrid() {
       newGridSize = parseInt(document.getElementsByName('newGridSize')[0].value)
       if (Number.isInteger(newGridSize) && newGridSize!== gridSize && newGridSize <= 100) {
@@ -40,9 +45,8 @@
       }
     }
 
-    //change all square classes back to no fill
-    //if grid value is an integer and it is different from previous
-    //value, then setup new grid
+    //clears the grid
+    //change all square classes fill to no fill
     function clearColour() {
       for (var square of squares) {
         square.classList.remove('colourMe');
@@ -70,6 +74,7 @@
 
       squares = document.querySelectorAll('.squareDiv');
 
+        //add hover event lister to all new sqaures & set the square size
       for (var square of squares) {
         square.addEventListener('mouseover',changeColour);
         square.style.setProperty('--squareWidth', squareWidth + 'px');
